@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Bank Management</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <h2>Bank Management System</h2>
+    {% with messages = get_flashed_messages() %}
+      {% if messages %}
+        <ul>
+          {% for message in messages %}
+            <li>{{ message }}</li>
+          {% endfor %}
+        </ul>
+      {% endif %}
+    {% endwith %}
+
+    {% if page == 'register' %}
+        <h3>Register</h3>
+        <form method="post">
+            Username: <input type="text" name="username" required><br>
+            Email: <input type="email" name="email" required><br>
+            Password: <input type="password" name="password" required><br>
+            <input type="submit" value="Register">
+        </form>
+        <p>Already registered? <a href="/login">Login</a></p>
+
+    {% elif page == 'login' %}
+        <h3>Login</h3>
+        <form method="post">
+            Username: <input type="text" name="username" required><br>
+            Password: <input type="password" name="password" required><br>
+            <input type="submit" value="Login">
+        </form>
+        <p>No account? <a href="/register">Register</a></p>
+
+    {% elif page == 'dashboard' %}
+        <h3>Welcome, {{ user['username'] }}</h3>
+        <ul>
+            <li><a href="/transaction">Make a Transaction</a></li>
+            <li><a href="/history">View History</a></li>
+            <li><a href="/logout">Logout</a></li>
+        </ul>
+
+    {% elif page == 'transaction' %}
+        <h3>Transaction</h3>
+        <form method="post">
+            Type:
+            <select name="type">
+                <option value="deposit">Deposit</option>
+                <option value="withdraw">Withdraw</option>
+            </select><br>
+            Amount: <input type="number" name="amount" step="0.01" required><br>
+            <input type="submit" value="Submit">
+        </form>
+        <a href="/dashboard">Back to Dashboard</a>
+
+    {% elif page == 'history' %}
+        <h3>Transaction History</h3>
+        <table border="1">
+            <tr><th>Type</th><th>Amount</th><th>Date</th></tr>
+            {% for t in history %}
+            <tr>
+                <td>{{ t['type'] }}</td>
+                <td>{{ t['amount'] }}</td>
+                <td>{{ t['date'] }}</td>
+            </tr>
+            {% endfor %}
+        </table>
+        <a href="/dashboard">Back to Dashboard</a>
+    {% endif %}
+</body>
+</html>

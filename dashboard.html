@@ -1,0 +1,23 @@
+<div class="container">
+  <h2>Welcome, {{ session['username'] }}</h2>
+  <p><strong>Balance:</strong> ₹{{ balance }}</p>
+
+  <form method="POST" action="/deposit">
+    <input type="number" name="amount" placeholder="Deposit Amount" required>
+    <button type="submit">Deposit</button>
+  </form>
+
+  <form method="POST" action="/withdraw">
+    <input type="number" name="amount" placeholder="Withdraw Amount" required>
+    <button type="submit">Withdraw</button>
+  </form>
+
+  <form method="POST" action="/transfer">
+    <input type="text" name="to_user" placeholder="Recipient Username" required>
+    <input type="number" name="amount" placeholder="Amount to Transfer" required>
+    <button type="submit">Transfer</button>
+  </form>
+
+  <a href="/history"><button>View History</button></a>
+  <a href="/logout"><button>Logout</button></a>
+</div>
